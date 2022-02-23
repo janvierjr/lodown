@@ -60,7 +60,7 @@ function typeOf(value) {
  module.exports.typeOf = typeOf;
 
  /**
-  * typeof: function takes inputs of an array and any value as arguments and returns index of value in array
+  * indexOf: function takes inputs of an array and any value as arguments and returns index of value in array
   * @param (any value) value: function takes an array and any value
   * @returns (any value) value: function returns the index of value in array
   * @edgecases value: if value isn't in array function returns -1
@@ -81,7 +81,7 @@ function indexOf(array, value) {
 module.exports.indexOf = indexOf;
 
 /**
- * typeof: function takes two inputs of an array and value and returns true if value is in array
+ * contains: function takes two inputs of an array and value and returns true if value is in array
  * @param (any value) value: input of array and value
  * @returns value: function returns true if value is in array or false if not
  * @edgecases value: if no value is given, returns false
@@ -97,11 +97,11 @@ function contains(array, value) {
 module.exports.contains = contains;
 
 /**
- * typeof:
- * @param
- * @returns
- * @edgecases
- * @constraints
+ * each: function that takes in a collection and action as arguments to determines whether colleciton is an Array or Object
+ * @param (any value) value: input of array or object and a callback function
+ * @returns requires function call, no returns
+ * @edgecases n/a
+ * @constraints n/a
  */
 
  function each(collection, action) {
@@ -120,11 +120,11 @@ module.exports.each = each;
 
 
 /**
- * typeof:
- * @param
- * @returns
- * @edgecases
- * @constraints
+ * unique: function takes in arguments of an array to remove duplicate values and return a new array
+ * @param (any value) value: input of array
+ * @returns (any value) value: returns a new array without duplicate values
+ * @edgecases n/a
+ * @constraints n/a
  */
 
 function unique(array) {
@@ -141,7 +141,7 @@ module.exports.unique = unique;
 
 
 /**
- * typeof:
+ * functionNameReplace:
  * @param
  * @returns
  * @edgecases
@@ -151,7 +151,7 @@ module.exports.unique = unique;
 
 
 /**
- * typeof:
+ * functionNameReplace:
  * @param
  * @returns
  * @edgecases
@@ -161,7 +161,48 @@ module.exports.unique = unique;
 
 
 /**
- * typeof:
+ * functionNameReplace:
+ * @param
+ * @returns
+ * @edgecases
+ * @constraints
+ */
+
+
+
+/**
+ * functionNameReplace:
+ * @param
+ * @returns
+ * @edgecases
+ * @constraints
+ */
+
+
+
+/**
+ * functionNameReplace:
+ * @param
+ * @returns
+ * @edgecases
+ * @constraints
+ */
+
+
+
+
+/**
+ * functionNameReplace:
+ * @param
+ * @returns
+ * @edgecases
+ * @constraints
+ */
+
+
+
+/**
+ * functionNameReplace:
  * @param
  * @returns
  * @edgecases
