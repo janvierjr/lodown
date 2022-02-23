@@ -39,7 +39,7 @@ module.exports.identity = identity;
 
 /**
  * typeof: function takes in any value as an argument and returns the data type of that value as a string
- * @param {any value} value: function takes in any values as an input value 
+ * @param (any value) value: function takes in any values as an input value 
  * @returns (any value) value: function returns a string of the data type of the input value 
  */
 
@@ -59,4 +59,111 @@ function typeOf(value) {
 
  module.exports.typeOf = typeOf;
 
- 
+ /**
+  * typeof: function takes inputs of an array and any value as arguments and returns index of value in array
+  * @param (any value) value: function takes an array and any value
+  * @returns (any value) value: function returns the index of value in array
+  * @edgecases value: if value isn't in array function returns -1
+  */
+
+function indexOf(array, value) {
+    let results = -1;
+    for (var i = 0; i < array.length - 1; i++) {
+        if (Array.isArray(value)) {
+            results;
+        } else if (array[i] === value) {
+            results = i;
+        } 
+    }
+    return results;
+}
+
+module.exports.indexOf = indexOf;
+
+/**
+ * typeof: function takes two inputs of an array and value and returns true if value is in array
+ * @param (any value) value: input of array and value
+ * @returns value: function returns true if value is in array or false if not
+ * @edgecases value: if no value is given, returns false
+ * @constraints value: function must use ternary operator  
+ */
+
+function contains(array, value) {
+    for (var i = 0; i < array.length; i++) {
+        return (array.includes(value) ? true : false);
+    }
+}
+
+module.exports.contains = contains;
+
+/**
+ * typeof:
+ * @param
+ * @returns
+ * @edgecases
+ * @constraints
+ */
+
+ function each(collection, action) {
+    if(Array.isArray(collection)) {
+        for(var i = 0; i < collection.length; i++) {
+            action(collection[i], i, collection);
+        }
+    } else {
+        for (var key in collection) {
+            action(collection[key], key, collection);
+        }
+    }
+}
+
+module.exports.each = each;
+
+
+/**
+ * typeof:
+ * @param
+ * @returns
+ * @edgecases
+ * @constraints
+ */
+
+function unique(array) {
+    let newArray = [];
+    for (var i = 0; i < array.length; i++) {
+        if(newArray.indexOf(array[i]) === -1) {
+            newArray.push(array[i]);
+        }
+    }
+    return newArray;
+}
+
+module.exports.unique = unique;
+
+
+/**
+ * typeof:
+ * @param
+ * @returns
+ * @edgecases
+ * @constraints
+ */
+
+
+
+/**
+ * typeof:
+ * @param
+ * @returns
+ * @edgecases
+ * @constraints
+ */
+
+
+
+/**
+ * typeof:
+ * @param
+ * @returns
+ * @edgecases
+ * @constraints
+ */
