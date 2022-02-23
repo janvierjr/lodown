@@ -141,23 +141,47 @@ module.exports.unique = unique;
 
 
 /**
- * functionNameReplace:
- * @param
- * @returns
- * @edgecases
- * @constraints
+ * filter: function takes in two arguments of an array and a function and returns a new array of elements where function returns turn
+ * @param (any value) value: inputs of an array and a function
+ * @returns (any value) value: returns a new array of elements evaluated as true of the input function 
+ * @edgecases n/a
+ * @constraints n/a
  */
 
+ function filter(array, func) {
+    let newArray = [];
+    for (var i = 0; i < array.length; i++) {
+        let element = array[i];
+        if (func(element, i, array) == true) {
+            newArray.push(element);
+        }
+    }
+    return newArray;
+}
+
+module.exports.filter = filter;
 
 
 /**
- * functionNameReplace:
- * @param
- * @returns
- * @edgecases
- * @constraints
+ * reject: function takes in two arguments of an array and a function and returns a new array of elements where function returns tur
+ * @param (any value) value: inputs of an array and a function
+ * @returns (any value) value: returns a new array of elements evaluated as false of the input function 
+ * @edgecases n/a
+ * @constraints n/a
  */
 
+ function reject(array, func) {
+    let newArray = [];
+    for (var i = 0; i < array.length; i++) {
+        let element = array[i];
+        if (func(element, i, array) !== true) {
+            newArray.push(element);
+        }
+    }
+    return newArray;
+}
+
+module.exports.reject = reject;
 
 
 /**
