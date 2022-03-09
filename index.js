@@ -61,7 +61,7 @@ function typeOf(value) {
 
 /**
  * first: function takes in two inputs of an array and a number and returns the first <number> items of <array>
- * @param {array} value: function determines if array is an array and takes input of an array 
+ * @param {array} collection: function determines if array is an array and takes input of an array 
  * @param {number} value: function determines if number is a number or given and takes input of a number
  * @returns {any value} value: returns the first value of the array
  * @returns {array} value: returns the entire array if number is greater than length of array
@@ -92,7 +92,7 @@ module.exports.first = first;
 
 /**
  * last: function takes in two inputs of an array and a number and returns the last <number> items of <array>
- * @param {array} value: function determines if array is an array and takes input of an array 
+ * @param {array} collection: function determines if array is an array and takes input of an array 
  * @param {number} value: function determines if number is a number or given and takes input of a number
  * @returns {any value} value: returns the last value of the array
  * @returns {array} value: returns the entire array if number is greater than length of array
@@ -124,9 +124,9 @@ module.exports.last = last;
 
  /**
   * indexOf: function takes inputs of an array and any value as arguments and returns index of value in array
-  * @param {array} value: function takes the input of an array
+  * @param {array} collection: function takes the input of an array to iterate through
   * @param {any value} value: function takes the input of any value
-  * @returns (any value) value: function returns the index of value in array
+  * @returns {any value} value: function returns the index of value in array
   * @edgecases value: if value isn't in array function returns -1
   */
 
@@ -146,10 +146,11 @@ module.exports.indexOf = indexOf;
 
 /**
  * contains: function takes two inputs of an array and value and returns true if value is in array
- * @param (any value) value: input of array and value
- * @returns value: function returns true if value is in array or false if not
+ * @param {array} collection: function takes the input of an array to iterate through
+ * @param {any value} value: function takes the input of any value
+ * @returns {boolean} value: function returns true if value is in array or false if not
  * @edgecases value: if no value is given, returns false
- * @constraints value: function must use ternary operator  
+ * @constraints n/a
  */
 
 function contains(array, value) {
@@ -161,8 +162,9 @@ function contains(array, value) {
 module.exports.contains = contains;
 
 /**
- * each: function that takes in a collection and action as arguments to determines whether colleciton is an Array or Object
- * @param (any value) value: input of array or object and a callback function
+ * each: function that takes in a collection and action as arguments to determines whether collection is an Array or Object
+ * @param {array or object} collection: function takes the input of an array or an object to iterate through
+ * @param {Function} action: The Function to be applied to each value in the collection
  * @returns requires function call, no returns
  * @edgecases n/a
  * @constraints n/a
@@ -185,8 +187,8 @@ module.exports.each = each;
 
 /**
  * unique: function takes in arguments of an array to remove duplicate values and return a new array
- * @param (any value) value: input of array
- * @returns (any value) value: returns a new array without duplicate values
+ * @param {array} collection: function takes the input of an array to iterate through
+ * @returns {array} collection: returns a new array without duplicate values
  * @edgecases n/a
  * @constraints n/a
  */
@@ -205,9 +207,10 @@ module.exports.unique = unique;
 
 
 /**
- * filter: function takes in two arguments of an array and a function and returns a new array of elements where function returns turn
- * @param (any value) value: inputs of an array and a function
- * @returns (any value) value: returns a new array of elements evaluated as true of the input function 
+ * filter: function takes in two arguments of an array and a function and returns a new array of elements where function returns true
+ * @param {array} collection: function takes the input of an array to iterate through
+ * @param {Function} action: The Function to be applied to each value in the collection
+ * @returns {array} collection: returns a new array of elements evaluated as true of the input function 
  * @edgecases n/a
  * @constraints n/a
  */
@@ -228,8 +231,9 @@ module.exports.filter = filter;
 
 /**
  * reject: function takes in two arguments of an array and a function and returns a new array of elements where function returns tur
- * @param (any value) value: inputs of an array and a function
- * @returns (any value) value: returns a new array of elements evaluated as false of the input function 
+ * @param {array} collection: function takes the input of an array to iterate through
+ * @param {Function} action: The Function to be applied to each value in the collection
+ * @returns {array} collection: returns a new array of elements evaluated as false of the input function 
  * @edgecases n/a
  * @constraints n/a
  */
@@ -249,60 +253,218 @@ module.exports.reject = reject;
 
 
 /**
- * functionNameReplace:
- * @param
- * @returns
- * @edgecases
- * @constraints
+ * partition: function takes in two arguments of an array and a function and return 2 subarrays: 1 truthy and 1 falsy
+ * @param {array} collection: function takes the input of an array to iterate through
+ * @param {Function} action: The Function to be applied to each value in the collection
+ * @returns {array} collection: 2 subarrays: 1 for values which input fuction evaluates to truthy and one evaluated for falsy
+ * @edgecases return array of arrays
+ * @constraints n/a
  */
 
+function partition(array, func) {
+    let result = [[],[]];
+        for (let i = 0; i < array.length; i++) {
+            var collection = func(array[i], i, array);
+            if (!!collection) {
+                result[0].push(array[i]);
+            } else {
+                result[1].push(array[i]);
+            }
+        }
+    return result;
+}
 
+module.exports.partition = partition;
 
 /**
- * functionNameReplace:
- * @param
- * @returns
- * @edgecases
- * @constraints
+ * map: function takes in two arguments of an array and a function, determine if array or object, and return new array
+ * @param {array or object} collection: function takes the input of an array or object to iterate through
+ * @param {Function} action: The Function to be applied to each value in the collection
+ * @returns {array} collection: a new array of return values for each function call through collection
+ * @edgecases n/a
+ * @constraints n/a
  */
 
+function map(collection, func) {
+    let mapped = [];
+    if (Array.isArray(collection)) {
+        for (let i = 0; i < collection.length; i++) {
+            let element = collection[i];
+            var result = func(element, i, collection); // invoke the callback function, passing in the current valueof the array, the current index, and the array itself
+            mapped.push(result);
+        }
+    } else {  // else it's an object
+        for (let key in collection) {
+            mapped.push(func(collection[key], key, collection));
+        }
+    }
+    return mapped;
+}
 
+module.exports.map = map;
 
 /**
- * functionNameReplace:
- * @param
- * @returns
- * @edgecases
- * @constraints
+ * pluck: function takes in a
+ * @param {array} collection: function takes the input of an array of objects to iterate through
+ * @param {object property} value: an object property/key from array of objects
+ * @returns {array} collection: an array containing every value of the input property for every object from input array
+ * @edgecases n/a
+ * @constraints must use .map() 
  */
 
+function pluck(array, key) {
+    for (let i = 0; i < array.length; i++) {
+        var output = _.map(array, function(object) {
+            for (key in object) {
+                return object[key];
+            }
+        });
+    }
+    return output;
+}
 
-
+module.exports.pluck = pluck;
 
 /**
- * functionNameReplace:
- * @param
- * @returns
- * @edgecases
- * @constraints
+ * every: function takes in arguments of a collection and a function and returns true if ALL values in collection pass input function evaluation
+ * @param {array or object} collection: function takes the input of an array or object to iterate through
+ * @param {Function} action: The Function to be applied to each value in the collection
+ * @returns {boolean} value: returns true if function evaluates EVERY element in collection to be true
+ * @edgecases if no function is provided, return true if every element is truthy, otherwise false
+ * @constraints n/a
  */
 
+function every(collection, func) {
+    // determine if func is defined
+    if (func === undefined) {
+        if (Array.isArray(collection)) {
+            for (let i = 0; i < collection.length; i++) {
+                if (!collection[i]) { // if the current value in the array is FALSY
+                    return false;
+                } 
+            } 
+        } else { 
+            for (let key in collection) {
+                if (!collection[key]) {
+                    return false;
+                }
+            } 
+        }
 
+    } else {
+        if (Array.isArray(collection)) {
+            for (let i = 0; i < collection.length; i++) {
+                let element = collection[i];
+                if (func(element, i, collection) === false) {
+                    return false;
+                }
+            }
+        } else {
+            for (let key in collection) {
+                if(!collection[key]) {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+module.exports.every = every;
 
 /**
- * functionNameReplace:
- * @param
- * @returns
- * @edgecases
- * @constraints
+* some: function takes in arguments of a collection and a function and returns true if ANY values in collection pass input function evaluation
+ * @param {array or object} collection: function takes the input of an array or object to iterate through
+ * @param {Function} action: The Function to be applied to each value in the collection
+ * @returns {boolean} value: returns true if function evaluates ANY element in collection to be true
+ * @edgecases if no function is provided, return true if at least one element is truthy, otherwise false
+ * @constraints n/a
  */
 
+function some(collection, func) {
+        if (func === undefined) {
+            if (Array.isArray(collection)) {
+                for (let i = 0; i < collection.length; i++) {
+                    if (collection[i]) { // if the current value in the array is FALSY
+                        return true;
+                    } 
+                } 
+            } else { 
+                for (let key in collection) {
+                    if (collection[key]) {
+                        return false;
+                    }
+                } 
+            }
+    
+     } else {
+         if (Array.isArray(collection)) {
+            for (let i = 0; i < collection.length; i++) {
+                let element = collection[i];
+                if (func(element, i, collection) === true) {
+                    return true;
+                }
+            }
+        } else {
+            for (let key in collection) {
+                if(collection[key]) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
 
+module.exports.some = some;
 
 /**
- * functionNameReplace:
- * @param
- * @returns
- * @edgecases
- * @constraints
+ * reduce: function takes the arguments a collection of array, a function, and a seed (initial state of reduction) to evaluate and return a single value
+ * @param {array} collection: function takes the input of an array to iterate through
+ * @param {Function} action: The Function to be applied to each value in the collection
+ * @param {seed} value: the inital state/value of the reduction
+ * @returns {any value} value: returns the final value of the function call
+ * @edgecases if seed is not given, the first value of array is evaluated as seed
+ * @constraints n/a
  */
+
+function reduce(array, func, seed) {
+    // create accumulator variable
+    let accumulator;
+    if (seed === undefined) {
+        accumulator = array[0];
+        for (let i = 1; i < array.length; i++) {
+            accumulator = func(accumulator, array[i], i, array);
+        }
+    } else {
+        accumulator = seed;
+        for (let i = 0; i < array.length; i++) {
+            accumulator = func(accumulator, array[i], i, array);
+        }
+    }
+    return accumulator;
+}
+
+module.exports.reduce = reduce;
+
+
+ /**
+ * extend: function takes in mulitple objects as arguments and returns destination object that includes copy of source objects
+ * @param {object} collection: function takes the input object to iterate through
+ * @param {...objects} collections: function takes in addtional input objects to be assigned to destination object
+ * @returns {object} collection: returns new object that includes copy of source object(s) properties in the order they are iterated/passed through
+ * @edgecases n/a
+ * @constraints n/a
+ */
+
+
+function extend(object, ...inputs) {
+    // similar conceptually the Object.assign from lecture - think ES6, with Spread operator... if console.log(inputs); =>. [{a: 1}, {b: 2}, {c: 3}];
+    var newObject = {};
+        for (let i = 0; i < inputs.length; i++) {
+            newObject = Object.assign(object, inputs[i]);
+        }
+    return newObject;
+}
+
+module.exports.extend = extend;
